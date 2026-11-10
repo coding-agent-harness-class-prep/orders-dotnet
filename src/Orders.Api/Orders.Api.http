@@ -1,0 +1,34 @@
+@baseUrl = http://localhost:5080
+
+### List the catalog
+GET {{baseUrl}}/products
+
+### Place an order
+POST {{baseUrl}}/orders
+Content-Type: application/json
+
+{
+  "customerId": "C-1001",
+  "customerTier": "Silver",
+  "region": "WA",
+  "lines": [
+    { "sku": "MON-27", "quantity": 2 },
+    { "sku": "CAB-USBC", "quantity": 4 }
+  ]
+}
+
+### An invalid order (unknown SKU, zero quantity)
+POST {{baseUrl}}/orders
+Content-Type: application/json
+
+{
+  "customerId": "C-1001",
+  "customerTier": "Standard",
+  "region": "WA",
+  "lines": [
+    { "sku": "NOPE-1", "quantity": 0 }
+  ]
+}
+
+### List pending orders
+GET {{baseUrl}}/orders?status=Pending
